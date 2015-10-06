@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">RedTubeSearch</string>
+    <string name="SearchActivityLabel">Search in RedTube!</string>
+    <string name="searchButtonText">search</string>
+    <string name="connection_error">Connection error</string>
+    <string name="xml_error">XML error</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="search_title">Search</string>
+</resources>
