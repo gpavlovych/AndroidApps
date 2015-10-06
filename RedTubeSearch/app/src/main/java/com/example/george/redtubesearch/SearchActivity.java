@@ -13,6 +13,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Xml;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,9 +33,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     public static final String REDTUBE_URL = "http://api.redtube.com/?data=redtube.Videos.searchVideos&output=xml&search=%s&tags[]=MILF&thumbsize=all";
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        new DownloadXmlTask(this).execute(String.format(REDTUBE_URL,query));
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
 
     private class DownloadXmlTask extends AsyncTask<String, Void, List<VideoItem>> {
         private final Activity context;
@@ -180,14 +192,18 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(this);
+        }
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
         return super.onCreateOptionsMenu(menu);
-    }
-
-    public void searchButton_Click(View view) throws ExecutionException, InterruptedException {
-        final EditText searchEditText = (EditText) findViewById(R.id.searchEditText);
-
-        String searchRequest = searchEditText.getText().toString();
-
-        new DownloadXmlTask(this).execute(String.format(REDTUBE_URL,searchRequest));
     }
 }
