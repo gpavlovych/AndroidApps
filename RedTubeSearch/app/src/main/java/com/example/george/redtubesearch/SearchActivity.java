@@ -17,10 +17,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+
+import com.commonsware.cwac.endless.EndlessAdapter;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -39,138 +42,25 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        new DownloadXmlTask(this).execute(String.format(REDTUBE_URL,query));
+        EndlessAdapter adapter = new VideosListEndlessAdapter(this, new ArrayList<VideoItem>(),query);
+        ListView list = (ListView) findViewById(R.id.videosList);
+        list.setAdapter(adapter);
+        final Activity context = this;
+        list.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                VideosListEndlessAdapter adapter = (VideosListEndlessAdapter)(parent.getAdapter());
+                Intent intent = new Intent(context, PlayVideoActivity.class);
+                intent.setData(Uri.parse(((VideoItem)adapter.getItem(+position)).videoUrl.replace("player/", "")));
+                startActivity(intent);
+            }
+        });
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
         return false;
-    }
-
-    private class DownloadXmlTask extends AsyncTask<String, Void, List<VideoItem>> {
-        private final Activity context;
-
-        public DownloadXmlTask(Activity context) {
-            this.context = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            ShowProgressBar();
-        }
-
-        @Override
-        protected List<VideoItem> doInBackground(String... urls) {
-            try {
-                // Thread.sleep(10000);
-                return loadXmlFromNetwork(urls[0]);
-            } catch (IOException e) {
-                return null;
-            } catch (XmlPullParserException e) {
-                return null;
-            }
-        }
-
-        private List<VideoItem> loadXmlFromNetwork(String url) throws IOException, XmlPullParserException {
-            URL urlObj = new URL(url);
-            HttpURLConnection urlConnection = (HttpURLConnection) urlObj.openConnection();
-            BufferedInputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            XmlPullParser parser = Xml.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(in, null);
-            parser.nextTag();
-            return readEntries(parser, "root");
-        }
-
-        @NonNull
-        private List<VideoItem> readEntries(XmlPullParser parser, String startTag) throws XmlPullParserException, IOException {
-            List<VideoItem> entries = new ArrayList<VideoItem>();
-            parser.require(XmlPullParser.START_TAG, "", startTag);
-            while (parser.next() != XmlPullParser.END_TAG) {
-                if (parser.getEventType() != XmlPullParser.START_TAG) {
-                    continue;
-                }
-                String name = parser.getName();
-                // Starts by looking for the entry tag
-                switch (name) {
-                    case "video":
-                        entries.add(readEntry(parser));
-                        break;
-                    case "videos":
-                        return readEntries(parser, "videos");
-                    default:
-                        skip(parser);
-                        break;
-                }
-            }
-            return entries;
-        }
-
-        private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
-            if (parser.getEventType() != XmlPullParser.START_TAG) {
-                throw new IllegalStateException();
-            }
-            int depth = 1;
-            while (depth != 0) {
-                switch (parser.next()) {
-                    case XmlPullParser.END_TAG:
-                        depth--;
-                        break;
-                    case XmlPullParser.START_TAG:
-                        depth++;
-                        break;
-                }
-            }
-        }
-
-        private VideoItem readEntry(XmlPullParser parser) throws IOException, XmlPullParserException {
-            parser.require(XmlPullParser.START_TAG, "", "video");
-            String title = null;
-            String embedUrl = null;
-            String link = null;
-            embedUrl = parser.getAttributeValue("", "embed_url");
-            link = parser.getAttributeValue("", "thumb");
-            while (parser.next() != XmlPullParser.END_TAG) {
-                if (parser.getEventType() != XmlPullParser.START_TAG) {
-                    continue;
-                }
-                String name = parser.getName();
-
-                if (name.equals("title")) {
-                    title = parser.getText();
-                    if (title == null) {
-                        parser.nextToken();
-                        title = parser.getText();
-                    }
-                    while (parser.next() != XmlPullParser.END_TAG) parser.next();
-                } /*else if (name.equals("summary")) {
-                    summary = readSummary(parser);
-                } else if (name.equals("link")) {
-                    link = readLink(parser);
-                }*/ else {
-                    skip(parser);
-                }
-            }
-            return new VideoItem(title, link, embedUrl);
-        }
-
-        @Override
-        protected void onPostExecute(List<VideoItem> result) {
-            HideProgressBar();
-            final VideoItem itemArray[] = result.toArray(new VideoItem[result.size()]);
-            VideosListAdapter adapter = new VideosListAdapter(this.context, itemArray);
-            ListView list = (ListView) findViewById(R.id.videosList);
-            list.setAdapter(adapter);
-            list.setOnItemClickListener(new ListView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(context,PlayVideoActivity.class);
-                    intent.setData(Uri.parse(itemArray[+position].videoUrl.replace("player/","")));
-                    startActivity(intent);
-                }
-            });
-        }
     }
 
     private void ShowProgressBar() {

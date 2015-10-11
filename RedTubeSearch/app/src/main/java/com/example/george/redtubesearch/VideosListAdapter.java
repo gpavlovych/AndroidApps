@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 
 /**
  * Created by George on 10/4/2015.
@@ -23,14 +24,12 @@ import java.net.URLConnection;
 public class VideosListAdapter extends ArrayAdapter<VideoItem> {
 
     private final Activity context;
-    private final VideoItem[] items;
 
-    public VideosListAdapter(Activity context, VideoItem[] items) {
+    public VideosListAdapter(Activity context, ArrayList<VideoItem> items) {
         super(context, R.layout.thumblist, items);
         // TODO Auto-generated constructor stub
 
         this.context = context;
-        this.items = items;
     }
 
     public View getView(int position, View view, ViewGroup parent) {
@@ -40,8 +39,8 @@ public class VideosListAdapter extends ArrayAdapter<VideoItem> {
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         TextView itemName = (TextView) rowView.findViewById(R.id.itemName);
 
-        itemName.setText(items[position].title);
-        new BitmapDownloader(imageView).execute(items[position].thumbUrl);
+        itemName.setText(getItem(position).title);
+        new BitmapDownloader(imageView).execute(getItem(position).thumbUrl);
         return rowView;
 
     }
