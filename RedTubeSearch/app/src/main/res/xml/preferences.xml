@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/pref_key_sorting_category_title"
+        android:key="pref_key_sorting_category">
+        <CheckBoxPreference
+            android:key="pref_key_sorting"
+            android:summary="@string/pref_key_sorting_summary"
+            android:title="@string/pref_key_sorting_title"
+            android:defaultValue="false" />
+        <ListPreference
+            android:key="pref_key_sorting_method"
+            android:dependency="pref_key_sorting"
+            android:title="@string/pref_key_sorting_method_title"
+            android:summary="@string/pref_key_sorting_method_summary"
+            android:entryValues="@array/pref_key_sorting_method_values"
+            android:entries="@array/pref_key_sorting_method_entries"
+            android:defaultValue="@string/pref_key_sorting_method_default" />
+        <ListPreference
+            android:key="pref_key_sorting_parameter"
+            android:dependency="pref_key_sorting"
+            android:title="@string/pref_key_sorting_parameter_title"
+            android:summary="@string/pref_key_sorting_parameter_summary"
+            android:entryValues="@array/pref_key_sorting_parameter_values"
+            android:entries="@array/pref_key_sorting_parameter_entries"
+            android:defaultValue="@string/pref_key_sorting_parameter_default" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_key_category_category_title"
+        android:key="pref_key_category_category">
+        <CheckBoxPreference
+            android:key="pref_key_hascategory"
+            android:summary="@string/pref_key_hascategory_summary"
+            android:title="@string/pref_key_hascategory_title"
+            android:defaultValue="false" />
+        <com.example.george.redtubesearch.DynamicListPreference
+            android:key="pref_key_category"
+            android:dependency="pref_key_hascategory"
+            android:title="@string/pref_key_category_title"
+            android:summary="@string/pref_key_category_summary"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_key_tag_category_title"
+        android:key="pref_key_tag_category">
+
+        <com.example.george.redtubesearch.DynamicMultiListPreference
+            android:key="pref_key_tag"
+            android:title="@string/pref_key_tag_title"
+            android:summary="@string/pref_key_tag_summary"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_key_star_category_title"
+        android:key="pref_key_star_category">
+
+        <com.example.george.redtubesearch.DynamicMultiListPreference
+            android:key="pref_key_star"
+            android:title="@string/pref_key_star_title"
+            android:summary="@string/pref_key_star_summary"/>
+    </PreferenceCategory>
+</PreferenceScreen>

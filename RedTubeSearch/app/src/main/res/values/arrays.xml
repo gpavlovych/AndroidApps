@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_key_sorting_method_entries">
+        <item name="newest">@string/pref_key_sorting_method_entries_newest</item>
+        <item name="mostviewed">@string/pref_key_sorting_method_entries_mostviewed</item>
+        <item name="rating">@string/pref_key_sorting_method_entries_rating</item>
+    </string-array>
+    <string-array name="pref_key_sorting_method_values">
+        <item name="newest">newest</item>
+        <item name="mostviewed">mostviewed</item>
+        <item name="rating">rating</item>
+    </string-array>
+    <string-array name="pref_key_sorting_parameter_entries">
+        <item name="weekly">@string/pref_key_sorting_parameter_entries_weekly</item>
+        <item name="monthly">@string/pref_key_sorting_parameter_entries_monthly</item>
+        <item name="alltime">@string/pref_key_sorting_parameter_entries_alltime</item>
+    </string-array>
+    <string-array name="pref_key_sorting_parameter_values">
+        <item name="weekly">weekly</item>
+        <item name="monthly">monthly</item>
+        <item name="alltime">alltime</item>
+    </string-array>
+</resources>

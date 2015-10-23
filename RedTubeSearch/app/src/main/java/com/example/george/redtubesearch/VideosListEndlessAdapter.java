@@ -3,6 +3,7 @@ package com.example.george.redtubesearch;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +31,29 @@ import java.util.List;
  */
 public class VideosListEndlessAdapter extends EndlessAdapter {
     private final String searchTerm;
-    public static final String REDTUBE_URL = "http://api.redtube.com/?data=redtube.Videos.searchVideos&output=xml&search=%s&tags[]=MILF&thumbsize=all&page=%s";
+    public static final String REDTUBE_URL = "http://api.redtube.com/?data=redtube.Videos.searchVideos&output=xml&search=%s&thumbsize=all&page=%s";
+    private static final String REDTUBE_CATEGORY_URL="&category=%s";
+    private static final String REDTUBE_TAGS_URL="&tags[]=%s";
+    private static final String REDTUBE_STARS_URL="&stars[]=%s";
+    private final boolean isSorted;
+    private final String sortingMethod;
+    private final String sortingParameter;
+    private final boolean hasCategory;
+    private final String category;
+    private final String tags;
+    private final String stars;
     private View pendingView = null;
     private RotateAnimation rotate=null;
 
-    VideosListEndlessAdapter(Activity activity, ArrayList<VideoItem> list,String searchTerm) {
+    VideosListEndlessAdapter(Activity activity, ArrayList<VideoItem> list, String searchTerm, boolean isSorted, String sortingMethod, String sortingParameter,boolean hasCategory, String category, String tags,String stars) {
         super(new VideosListAdapter(activity,list));
+        this.isSorted = isSorted;
+        this.sortingMethod = sortingMethod;
+        this.sortingParameter = sortingParameter;
+        this.hasCategory = hasCategory;
+        this.category = category;
+        this.tags = tags;
+        this.stars = stars;
         rotate=new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF,
                 0.5f, Animation.RELATIVE_TO_SELF,
                 0.5f);
@@ -69,8 +87,12 @@ public class VideosListEndlessAdapter extends EndlessAdapter {
     protected boolean cacheInBackground() throws Exception {
         pageNumber++;
         try {
-            // Thread.sleep(10000);
-            _items = loadXmlFromNetwork(String.format(REDTUBE_URL,searchTerm,pageNumber));
+            _items = loadXmlFromNetwork(String.format(REDTUBE_URL,searchTerm,pageNumber)+
+                    (isSorted?String.format("&ordering=%s",sortingMethod):"")+
+                    (isSorted && (sortingMethod.equals("rating") || sortingMethod.equals("mostviewed"))?String.format("&period=%s",sortingParameter):"")+
+                    (hasCategory?String.format(REDTUBE_CATEGORY_URL, category):"")+
+                    ((!TextUtils.isEmpty(tags))?String.format(REDTUBE_TAGS_URL,tags):"")+
+                    ((!TextUtils.isEmpty(stars))?String.format(REDTUBE_STARS_URL,stars):""));
         } catch (IOException e) {
             _items =  null;
         } catch (XmlPullParserException e) {
