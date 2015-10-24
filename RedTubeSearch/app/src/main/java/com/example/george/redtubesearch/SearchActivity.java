@@ -6,40 +6,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.commonsware.cwac.endless.EndlessAdapter;
+import com.example.george.redtubesearch.Contract.VideoItem;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.lang.ref.Reference;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class SearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     private static final int RESULT_SETTINGS = 1;
@@ -64,7 +48,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 VideosListEndlessAdapter adapter = (VideosListEndlessAdapter) (parent.getAdapter());
                 Intent intent = new Intent(context, PlayVideoActivity.class);
-                intent.setData(Uri.parse(((VideoItem) adapter.getItem(+position)).videoUrl.replace("player/", "")));
+                intent.setData(Uri.parse(((VideoItem) adapter.getItem(+position)).getVideoUrl().replace("player/", "")));
                 startActivity(intent);
             }
         });

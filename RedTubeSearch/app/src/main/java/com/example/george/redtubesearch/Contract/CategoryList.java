@@ -1,4 +1,4 @@
-package com.example.george.redtubesearch;
+package com.example.george.redtubesearch.Contract;
 
 
 import org.simpleframework.xml.ElementList;
@@ -11,9 +11,13 @@ import java.util.List;
  */
 @Root(name="categories")
 public class CategoryList {
-    @ElementList(inline = true,entry="category")
-    private List<String> categories;
+    private final List<String> categories;
 
+    public CategoryList(@ElementList(inline = true,entry="category") List<String> categories) {
+        this.categories = categories;
+    }
+
+    @ElementList(inline = true,entry="category")
     public List<String> getCategories()
     {
         return categories;

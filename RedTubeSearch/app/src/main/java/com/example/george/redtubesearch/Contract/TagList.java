@@ -1,4 +1,4 @@
-package com.example.george.redtubesearch;
+package com.example.george.redtubesearch.Contract;
 
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
@@ -10,8 +10,13 @@ import java.util.List;
  */
 @Root(name = "tags")
 public class TagList {
+    private final List<String> tags;
+
+    public TagList(@ElementList(inline = true,entry = "tag") List<String> tags) {
+        this.tags = tags;
+    }
+
     @ElementList(inline = true,entry = "tag")
-    private List<String> tags;
     public List<String> getTags()
     {
         return tags;
