@@ -33,7 +33,7 @@
             android:summary="@string/pref_key_hascategory_summary"
             android:title="@string/pref_key_hascategory_title"
             android:defaultValue="false" />
-        <com.example.george.redtubesearch.DynamicListPreference
+        <com.example.george.redtubesearch.Preference.DynamicListPreference
             android:key="pref_key_category"
             android:dependency="pref_key_hascategory"
             android:title="@string/pref_key_category_title"
@@ -43,7 +43,7 @@
         android:title="@string/pref_key_tag_category_title"
         android:key="pref_key_tag_category">
 
-        <com.example.george.redtubesearch.DynamicMultiListPreference
+        <com.example.george.redtubesearch.Preference.DynamicMultiListPreference
             android:key="pref_key_tag"
             android:title="@string/pref_key_tag_title"
             android:summary="@string/pref_key_tag_summary"/>
@@ -52,7 +52,7 @@
         android:title="@string/pref_key_star_category_title"
         android:key="pref_key_star_category">
 
-        <com.example.george.redtubesearch.DynamicMultiListPreference
+        <com.example.george.redtubesearch.Preference.DynamicFilteredMultiListPreference
             android:key="pref_key_star"
             android:title="@string/pref_key_star_title"
             android:summary="@string/pref_key_star_summary"/>

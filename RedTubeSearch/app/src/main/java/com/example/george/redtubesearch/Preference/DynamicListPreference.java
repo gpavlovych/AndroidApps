@@ -1,38 +1,35 @@
-package com.example.george.redtubesearch;
+package com.example.george.redtubesearch.Preference;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
-import android.preference.MultiSelectListPreference;
+import android.preference.ListPreference;
 import android.util.AttributeSet;
 
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
+import com.example.george.redtubesearch.EntryProvider;
 
 /**
- * Created by George on 10/21/2015.
+ * Created by George on 10/22/2015.
  */
-public class DynamicMultiListPreference extends MultiSelectListPreference {
+public class DynamicListPreference extends ListPreference {
     private EntryProvider mEntryProvider;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public DynamicMultiListPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public DynamicListPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public DynamicMultiListPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DynamicListPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public DynamicMultiListPreference(Context context, AttributeSet attrs) {
+    public DynamicListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-
-    public DynamicMultiListPreference(Context context) {
+    public DynamicListPreference(Context context) {
         super(context);
     }
 
@@ -40,6 +37,7 @@ public class DynamicMultiListPreference extends MultiSelectListPreference {
     {
         mEntryProvider = provider;
     }
+
     @Override
     protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
         if (mEntryProvider != null) {

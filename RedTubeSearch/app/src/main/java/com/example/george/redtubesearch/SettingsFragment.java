@@ -8,6 +8,9 @@ import android.preference.PreferenceFragment;
 import com.example.george.redtubesearch.Contract.CategoryList;
 import com.example.george.redtubesearch.Contract.StarsList;
 import com.example.george.redtubesearch.Contract.TagList;
+import com.example.george.redtubesearch.Preference.DynamicFilteredMultiListPreference;
+import com.example.george.redtubesearch.Preference.DynamicListPreference;
+import com.example.george.redtubesearch.Preference.DynamicMultiListPreference;
 
 import java.util.concurrent.ExecutionException;
 
@@ -91,7 +94,7 @@ public class SettingsFragment extends PreferenceFragment {
                 return new CharSequence[0];
             }
         });
-        DynamicMultiListPreference starListPreference = (DynamicMultiListPreference)findPreference("pref_key_star");
+        DynamicFilteredMultiListPreference starListPreference = (DynamicFilteredMultiListPreference)findPreference("pref_key_star");
         starListPreference.setEntryProvider(new EntryProvider() {
             @Override
             public CharSequence[] entries() {
