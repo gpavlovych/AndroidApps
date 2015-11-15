@@ -11,14 +11,14 @@ import java.util.List;
  */
 @Root(name = "stars")
 public class StarsList {
-    private final List<String> stars;
+    private final List<Star> stars;
 
-    public StarsList(@ElementList(inline = true,entry = "star") List<String> stars) {
+    public StarsList(@ElementList(inline = true,entry = "star") List<Star> stars) {
         this.stars = stars;
     }
 
     @ElementList(inline = true,entry = "star")
-    public List<String> getStars() {
+    public List<Star> getStars() {
         return stars;
     }
 }
