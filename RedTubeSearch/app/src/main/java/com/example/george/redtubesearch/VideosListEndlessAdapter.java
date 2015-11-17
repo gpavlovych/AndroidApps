@@ -12,6 +12,7 @@ import com.commonsware.cwac.endless.EndlessAdapter;
 import com.example.george.redtubesearch.Contract.VideoItem;
 import com.example.george.redtubesearch.Contract.VideoList;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,12 +77,12 @@ public class VideosListEndlessAdapter extends EndlessAdapter {
     protected boolean cacheInBackground() throws Exception {
         pageNumber++;
         try {
-            String url = (String.format(REDTUBE_URL,searchTerm,pageNumber)+
+            String url = (String.format(REDTUBE_URL,URLEncoder.encode(searchTerm,java.nio.charset.StandardCharsets.UTF_8.name()),pageNumber)+
                     (isSorted?String.format("&ordering=%s",sortingMethod):"")+
                     (isSorted && (sortingMethod.equals("rating") || sortingMethod.equals("mostviewed"))?String.format("&period=%s",sortingParameter):"")+
-                    (hasCategory?String.format(REDTUBE_CATEGORY_URL, category):"")+
-                    ((!TextUtils.isEmpty(tags))?String.format(REDTUBE_TAGS_URL,tags):"")+
-                    ((!TextUtils.isEmpty(stars))?String.format(REDTUBE_STARS_URL,stars):""));
+                    (hasCategory?String.format(REDTUBE_CATEGORY_URL, URLEncoder.encode(category,java.nio.charset.StandardCharsets.UTF_8.name())):"")+
+                    ((!TextUtils.isEmpty(tags))?String.format(REDTUBE_TAGS_URL,URLEncoder.encode(tags,java.nio.charset.StandardCharsets.UTF_8.name())):"")+
+                    ((!TextUtils.isEmpty(stars))?String.format(REDTUBE_STARS_URL,URLEncoder.encode(stars,java.nio.charset.StandardCharsets.UTF_8.name())):""));
             _items=new DownloadXmlTask<VideoList>(VideoList.class).execute(url).get().getVideos();
         } catch (Exception e) {
             _items =  null;
