@@ -30,6 +30,9 @@ import java.util.HashSet;
 public class SearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     private static final int RESULT_SETTINGS = 1;
 
+    // TODO: 11/18/2015 consider using IoC container and DI
+    // TODO: 11/18/2015 cover everything with Unit Tests
+    // TODO: 11/18/2015 implement correct behavior when text search field is cleared
     @Override
     public boolean onQueryTextSubmit(String query) {
         searchVideos(query);
@@ -75,7 +78,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        PreferenceManager.setDefaultValues(this,R.xml.preferences,false);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         searchVideos("");
     }
 

@@ -26,8 +26,11 @@ import java.util.Set;
  */
 public class DynamicFilteredMultiListPreference extends DialogPreference {
     private EntryProvider mEntryProvider;
+    // TODO: 11/18/2015 make this preference more generic: get rid of direct link to concrete implementations
     private PornstarsEndlessAdapter adapter;
 
+    // TODO: 11/18/2015 Implement some button to hide keyboard correctly (add button Done)
+    // TODO: 11/18/2015 Implement auto-hide of textbox search
     public void setEntryProvider(EntryProvider provider) {
         mEntryProvider = provider;
     }

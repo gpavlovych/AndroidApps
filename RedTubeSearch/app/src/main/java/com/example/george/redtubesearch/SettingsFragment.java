@@ -96,31 +96,5 @@ public class SettingsFragment extends PreferenceFragment {
                 return new CharSequence[0];
             }
         });
-        DynamicFilteredMultiListPreference starListPreference = (DynamicFilteredMultiListPreference)findPreference("pref_key_star");
-        starListPreference.setEntryProvider(new EntryProvider() {
-            @Override
-            public CharSequence[] entries() {
-                try {
-                    return new DownloadXmlTask<StarsList>(StarsList.class).execute(REDTUBE_STARS_API_URL).get().getStars().toArray(new String[0]);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-                return new CharSequence[0];
-            }
-
-            @Override
-            public CharSequence[] entryValues() {
-                try {
-                    return new DownloadXmlTask<StarsList>(StarsList.class).execute(REDTUBE_STARS_API_URL).get().getStars().toArray(new String[0]);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-                return new CharSequence[0];
-            }
-        });
     }
 }
