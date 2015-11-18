@@ -7,8 +7,6 @@ import android.os.Build;
 import android.preference.ListPreference;
 import android.util.AttributeSet;
 
-import com.example.george.redtubesearch.EntryProvider;
-
 /**
  * Created by George on 10/22/2015.
  */

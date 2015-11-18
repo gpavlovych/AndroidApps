@@ -11,6 +11,8 @@ import com.example.george.redtubesearch.Contract.TagList;
 import com.example.george.redtubesearch.Preference.DynamicFilteredMultiListPreference;
 import com.example.george.redtubesearch.Preference.DynamicListPreference;
 import com.example.george.redtubesearch.Preference.DynamicMultiListPreference;
+import com.example.george.redtubesearch.Preference.EntryProvider;
+import com.example.george.redtubesearch.Tasks.DownloadXmlTask;
 
 import java.util.concurrent.ExecutionException;
 

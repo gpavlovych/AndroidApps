@@ -1,6 +1,5 @@
-package com.example.george.redtubesearch;
+package com.example.george.redtubesearch.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +8,15 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.george.redtubesearch.Contract.Star;
-import com.example.george.redtubesearch.Contract.VideoItem;
+import com.example.george.redtubesearch.R;
 
 import java.util.ArrayList;
+
+import it.sephiroth.android.library.picasso.Picasso;
 
 /**
  * Created by George on 10/4/2015.
@@ -49,7 +49,11 @@ public class StarsListAdapter extends ArrayAdapter<Star> {
             }
         });
         itemName.setText(getItem(position).getName());
-        new BitmapDownloader(imageView).execute(getItem(position).getThumbUrl());
+        String url = getItem(position).getThumbUrl();
+        Picasso.with(context)
+                .load(url)
+                .tag(context)
+                .into(imageView);
         return rowView;
     }
 }

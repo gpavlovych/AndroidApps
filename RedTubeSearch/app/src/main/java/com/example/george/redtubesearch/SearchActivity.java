@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.commonsware.cwac.endless.EndlessAdapter;
+import com.example.george.redtubesearch.Adapters.VideosListEndlessAdapter;
 import com.example.george.redtubesearch.Contract.VideoItem;
 
 import java.util.ArrayList;
@@ -31,6 +32,11 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+        searchVideos(query);
+        return true;
+    }
+
+    private void searchVideos(String query) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         boolean isSorted = sharedPref.getBoolean(SettingsActivity.PREF_KEY_SORTING, false);
@@ -58,7 +64,6 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-        return true;
     }
 
     @Override
@@ -71,6 +76,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         PreferenceManager.setDefaultValues(this,R.xml.preferences,false);
+        searchVideos("");
     }
 
     @Override

@@ -35,4 +35,5 @@ dependencies {
         exclude group: 'stax', module: 'stax-api'
         exclude group: 'xpp3', module: 'xpp3'
     }
+    compile 'it.sephiroth.android.library.picasso:picasso:2.5.2.4b'
 }

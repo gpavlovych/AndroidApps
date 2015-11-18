@@ -1,28 +1,21 @@
 package com.example.george.redtubesearch.Preference;
 
 import android.annotation.TargetApi;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.DialogPreference;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.ArraySet;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.commonsware.cwac.endless.EndlessAdapter;
 import com.example.george.redtubesearch.Contract.Star;
-import com.example.george.redtubesearch.Contract.VideoItem;
-import com.example.george.redtubesearch.EntryProvider;
-import com.example.george.redtubesearch.PornstarsEndlessAdapter;
+import com.example.george.redtubesearch.Adapters.PornstarsEndlessAdapter;
 import com.example.george.redtubesearch.R;
 import com.example.george.redtubesearch.SettingsActivity;
-import com.example.george.redtubesearch.VideosListEndlessAdapter;
 
 import java.util.ArrayList;
 import java.util.HashSet;

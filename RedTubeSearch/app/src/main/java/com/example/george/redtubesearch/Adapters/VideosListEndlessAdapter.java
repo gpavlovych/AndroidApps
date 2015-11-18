@@ -1,4 +1,4 @@
-package com.example.george.redtubesearch;
+package com.example.george.redtubesearch.Adapters;
 
 import android.app.Activity;
 import android.text.TextUtils;
@@ -11,6 +11,8 @@ import android.view.animation.RotateAnimation;
 import com.commonsware.cwac.endless.EndlessAdapter;
 import com.example.george.redtubesearch.Contract.VideoItem;
 import com.example.george.redtubesearch.Contract.VideoList;
+import com.example.george.redtubesearch.Tasks.DownloadXmlTask;
+import com.example.george.redtubesearch.R;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -21,7 +23,8 @@ import java.util.List;
  */
 public class VideosListEndlessAdapter extends EndlessAdapter {
     private final String searchTerm;
-    public static final String REDTUBE_URL = "http://api.redtube.com/?data=redtube.Videos.searchVideos&output=xml&search=%s&thumbsize=all&page=%s";
+    public static final String REDTUBE_URL = "http://api.redtube.com/?data=redtube.Videos.searchVideos&output=xml&thumbsize=all&page=%s";
+    private static final String REDTUBE_SEARCH_URL="&search=%s";
     private static final String REDTUBE_CATEGORY_URL="&category=%s";
     private static final String REDTUBE_TAGS_URL="&tags[]=%s";
     private static final String REDTUBE_STARS_URL="&stars[]=%s";
@@ -35,7 +38,7 @@ public class VideosListEndlessAdapter extends EndlessAdapter {
     private View pendingView = null;
     private RotateAnimation rotate=null;
 
-    VideosListEndlessAdapter(Activity activity, ArrayList<VideoItem> list, String searchTerm, boolean isSorted, String sortingMethod, String sortingParameter,boolean hasCategory, String category, String tags,String stars) {
+    public VideosListEndlessAdapter(Activity activity, ArrayList<VideoItem> list, String searchTerm, boolean isSorted, String sortingMethod, String sortingParameter,boolean hasCategory, String category, String tags,String stars) {
         super(new VideosListAdapter(activity,list));
         this.isSorted = isSorted;
         this.sortingMethod = sortingMethod;
@@ -77,17 +80,18 @@ public class VideosListEndlessAdapter extends EndlessAdapter {
     protected boolean cacheInBackground() throws Exception {
         pageNumber++;
         try {
-            String url = (String.format(REDTUBE_URL,URLEncoder.encode(searchTerm,java.nio.charset.StandardCharsets.UTF_8.name()),pageNumber)+
-                    (isSorted?String.format("&ordering=%s",sortingMethod):"")+
-                    (isSorted && (sortingMethod.equals("rating") || sortingMethod.equals("mostviewed"))?String.format("&period=%s",sortingParameter):"")+
-                    (hasCategory?String.format(REDTUBE_CATEGORY_URL, URLEncoder.encode(category,java.nio.charset.StandardCharsets.UTF_8.name())):"")+
-                    ((!TextUtils.isEmpty(tags))?String.format(REDTUBE_TAGS_URL,URLEncoder.encode(tags,java.nio.charset.StandardCharsets.UTF_8.name())):"")+
-                    ((!TextUtils.isEmpty(stars))?String.format(REDTUBE_STARS_URL,URLEncoder.encode(stars,java.nio.charset.StandardCharsets.UTF_8.name())):""));
-            _items=new DownloadXmlTask<VideoList>(VideoList.class).execute(url).get().getVideos();
+            String url = (String.format(REDTUBE_URL, pageNumber) +
+                    ((!TextUtils.isEmpty(searchTerm)) ? String.format(URLEncoder.encode(searchTerm, java.nio.charset.StandardCharsets.UTF_8.name()), searchTerm) : "") +
+                    (isSorted ? String.format("&ordering=%s", sortingMethod) : "") +
+                    (isSorted && (sortingMethod.equals("rating") || sortingMethod.equals("mostviewed")) ? String.format("&period=%s", sortingParameter) : "") +
+                    (hasCategory ? String.format(REDTUBE_CATEGORY_URL, URLEncoder.encode(category, java.nio.charset.StandardCharsets.UTF_8.name())) : "") +
+                    ((!TextUtils.isEmpty(tags)) ? String.format(REDTUBE_TAGS_URL, URLEncoder.encode(tags, java.nio.charset.StandardCharsets.UTF_8.name())) : "") +
+                    ((!TextUtils.isEmpty(stars)) ? String.format(REDTUBE_STARS_URL, URLEncoder.encode(stars, java.nio.charset.StandardCharsets.UTF_8.name())) : ""));
+            _items = new DownloadXmlTask<>(VideoList.class).execute(url).get().getVideos();
         } catch (Exception e) {
-            _items =  null;
+            _items = null;
         }
-        return _items!=null && _items.size()>0;
+        return _items != null && _items.size() > 0;
     }
 
     @Override

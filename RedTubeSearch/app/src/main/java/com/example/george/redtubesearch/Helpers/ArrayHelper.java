@@ -1,4 +1,4 @@
-package com.example.george.redtubesearch;
+package com.example.george.redtubesearch.Helpers;
 
 import android.text.TextUtils;
 

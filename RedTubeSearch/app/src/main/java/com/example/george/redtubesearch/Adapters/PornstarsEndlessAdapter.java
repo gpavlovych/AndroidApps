@@ -1,8 +1,6 @@
-package com.example.george.redtubesearch;
+package com.example.george.redtubesearch.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +10,14 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 import com.commonsware.cwac.endless.EndlessAdapter;
+import com.example.george.redtubesearch.Tasks.DownloadXmlTask;
+import com.example.george.redtubesearch.Helpers.ArrayHelper;
 import com.example.george.redtubesearch.Contract.Star;
 import com.example.george.redtubesearch.Contract.StarsList;
-import com.example.george.redtubesearch.Contract.VideoItem;
-import com.example.george.redtubesearch.Contract.VideoList;
+import com.example.george.redtubesearch.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by George on 10/11/2015.
@@ -77,7 +75,7 @@ public class PornstarsEndlessAdapter extends EndlessAdapter implements Filterabl
         StarsListAdapter a = (StarsListAdapter) getWrappedAdapter();
         if (_items != null) {
             for (Star star : _items) {
-                star.setSelected(ArrayHelper.containsItem(selectedStars,star.getName()));
+                star.setSelected(ArrayHelper.containsItem(selectedStars, star.getName()));
                 a.add(star);
             }
         }

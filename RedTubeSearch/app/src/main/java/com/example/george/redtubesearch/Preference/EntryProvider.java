@@ -1,4 +1,4 @@
-package com.example.george.redtubesearch;
+package com.example.george.redtubesearch.Preference;
 
 import org.xmlpull.v1.XmlPullParserException;
 

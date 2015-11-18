@@ -1,4 +1,4 @@
-package com.example.george.redtubesearch;
+package com.example.george.redtubesearch.Adapters;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -9,14 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.george.redtubesearch.Contract.VideoItem;
+import com.example.george.redtubesearch.R;
 
 import java.util.ArrayList;
+
+import it.sephiroth.android.library.picasso.Picasso;
 
 /**
  * Created by George on 10/4/2015.
  */
 public class VideosListAdapter extends ArrayAdapter<VideoItem> {
-
     private final Activity context;
 
     public VideosListAdapter(Activity context, ArrayList<VideoItem> items) {
@@ -34,7 +36,11 @@ public class VideosListAdapter extends ArrayAdapter<VideoItem> {
         TextView itemName = (TextView) rowView.findViewById(R.id.itemName);
 
         itemName.setText(getItem(position).getTitle());
-        new BitmapDownloader(imageView).execute(getItem(position).getThumbUrl());
+        String url = getItem(position).getThumbUrl();
+        Picasso.with(context)
+                .load(url)
+                .tag(context)
+                .into(imageView);
         return rowView;
 
     }

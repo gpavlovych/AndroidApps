@@ -6,12 +6,6 @@ import android.content.Context;
 import android.os.Build;
 import android.preference.MultiSelectListPreference;
 import android.util.AttributeSet;
-
-import com.example.george.redtubesearch.EntryProvider;
-
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 // TODO: 11/10/2015 Set asynchronous settings loading
 // TODO: 11/10/2015 Think on EditText behavior (search button, keyboard should be closed etc/
 // TODO: 11/10/2015 Think on how filtering in list view can be implemented
