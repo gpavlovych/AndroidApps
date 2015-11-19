@@ -30,6 +30,8 @@ import java.util.HashSet;
 public class SearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     private static final int RESULT_SETTINGS = 1;
 
+    // TODO: 11/19/2015 refresh on swipe down
+    // DONE: TODO: 11/19/2015 cant play video - user-agent has to be set up properly
     // TODO: 11/18/2015 consider using IoC container and DI
     // TODO: 11/18/2015 cover everything with Unit Tests
     // TODO: 11/18/2015 implement correct behavior when text search field is cleared
