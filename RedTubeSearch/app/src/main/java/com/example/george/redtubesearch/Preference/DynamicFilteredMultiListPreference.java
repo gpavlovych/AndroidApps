@@ -90,9 +90,9 @@ public class DynamicFilteredMultiListPreference extends DialogPreference {
         if (!positiveResult)
             return;
         Set<String> selectedStars = new HashSet<String>();
-        for (int index = 0; index < adapter.getCount() - 1; index++) {
+        for (int index = 0; index < adapter.getCount(); index++) {
             Star item = (Star) adapter.getItem(index);
-            if (item.getSelected()) {
+            if (item != null && item.getSelected()) {
                 selectedStars.add(item.getName());
             }
         }
