@@ -24,12 +24,9 @@ import it.sephiroth.android.library.picasso.Picasso;
 public class StarsListAdapter extends ArrayAdapter<Star> {
 
     private final Context context;
-    private Filter myFilter;
 
     public StarsListAdapter(Context context, ArrayList<Star> items) {
         super(context, R.layout.thumbchecklist, items);
-        // TODO Auto-generated constructor stub
-
         this.context = context;
     }
 

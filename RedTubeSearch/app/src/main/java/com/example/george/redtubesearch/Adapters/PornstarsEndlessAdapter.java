@@ -22,7 +22,7 @@ import java.util.List;
  * Created by George on 10/11/2015.
  */
 public class PornstarsEndlessAdapter extends EndlessAdapter implements Filterable {
-    // TODO: 11/18/2015 investigate why it took so much time
+    // Done (refactored to use SAX) TODO: 11/18/2015 investigate why it took so much time
     private static final String REDTUBE_DETAILED_STARLIST_URL = "http://api.redtube.com/?data=redtube.Stars.getStarDetailedList&output=xml";
     private final String[] selectedStars;
     private View pendingView = null;

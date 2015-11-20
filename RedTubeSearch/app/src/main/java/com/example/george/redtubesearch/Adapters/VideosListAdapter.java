@@ -23,8 +23,6 @@ public class VideosListAdapter extends ArrayAdapter<VideoItem> {
 
     public VideosListAdapter(Activity context, ArrayList<VideoItem> items) {
         super(context, R.layout.thumblist, items);
-        // TODO Auto-generated constructor stub
-
         this.context = context;
     }
 

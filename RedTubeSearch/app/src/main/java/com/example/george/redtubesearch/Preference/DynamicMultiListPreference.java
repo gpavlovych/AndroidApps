@@ -8,8 +8,8 @@ import android.preference.MultiSelectListPreference;
 import android.util.AttributeSet;
 // TODO: 11/10/2015 Set asynchronous settings loading
 // TODO: 11/10/2015 Think on EditText behavior (search button, keyboard should be closed etc/
-// TODO: 11/10/2015 Think on how filtering in list view can be implemented
-// TODO: 11/10/2015 icons might be added (discuss???)
+// Done TODO: 11/10/2015 Think on how filtering in list view can be implemented
+// Done TODO: 11/10/2015 icons might be added
 /**
  * Created by George on 10/21/2015.
  */
