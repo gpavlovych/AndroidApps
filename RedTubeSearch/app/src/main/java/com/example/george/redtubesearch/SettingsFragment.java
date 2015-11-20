@@ -5,14 +5,11 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
-import com.example.george.redtubesearch.Contract.CategoryList;
-import com.example.george.redtubesearch.Contract.StarsList;
-import com.example.george.redtubesearch.Contract.TagList;
-import com.example.george.redtubesearch.Preference.DynamicFilteredMultiListPreference;
 import com.example.george.redtubesearch.Preference.DynamicListPreference;
 import com.example.george.redtubesearch.Preference.DynamicMultiListPreference;
 import com.example.george.redtubesearch.Preference.EntryProvider;
-import com.example.george.redtubesearch.Tasks.DownloadXmlTask;
+import com.example.george.redtubesearch.Tasks.DownloadCategoryListXmlTask;
+import com.example.george.redtubesearch.Tasks.DownloadTagListXmlTask;
 
 import java.util.concurrent.ExecutionException;
 
@@ -47,7 +44,7 @@ public class SettingsFragment extends PreferenceFragment {
             @Override
             public CharSequence[] entries() {
                 try {
-                    return new DownloadXmlTask<CategoryList>(CategoryList.class).execute(REDTUBE_CATEGORIES_API_URL).get().getCategories().toArray(new String[0]);
+                    return new DownloadCategoryListXmlTask().execute(REDTUBE_CATEGORIES_API_URL).get().getCategories().toArray(new String[0]);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -60,7 +57,7 @@ public class SettingsFragment extends PreferenceFragment {
             public CharSequence[] entryValues() {
 
                 try {
-                    return new DownloadXmlTask<CategoryList>(CategoryList.class).execute(REDTUBE_CATEGORIES_API_URL).get().getCategories().toArray(new String[0]);
+                    return new DownloadCategoryListXmlTask().execute(REDTUBE_CATEGORIES_API_URL).get().getCategories().toArray(new String[0]);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -75,7 +72,7 @@ public class SettingsFragment extends PreferenceFragment {
             @Override
             public CharSequence[] entries() {
                 try {
-                    return new DownloadXmlTask<TagList>(TagList.class).execute(REDTUBE_TAGS_API_URL).get().getTags().toArray(new String[0]);
+                    return new DownloadTagListXmlTask().execute(REDTUBE_TAGS_API_URL).get().getTags().toArray(new String[0]);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -87,7 +84,7 @@ public class SettingsFragment extends PreferenceFragment {
             @Override
             public CharSequence[] entryValues() {
                 try {
-                    return new DownloadXmlTask<TagList>(TagList.class).execute(REDTUBE_TAGS_API_URL).get().getTags().toArray(new String[0]);
+                    return new DownloadTagListXmlTask().execute(REDTUBE_TAGS_API_URL).get().getTags().toArray(new String[0]);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {

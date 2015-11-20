@@ -29,4 +29,5 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     }
+    // TODO: 11/20/2015 refresh search on return
 }

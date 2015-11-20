@@ -10,9 +10,8 @@ import android.view.animation.RotateAnimation;
 
 import com.commonsware.cwac.endless.EndlessAdapter;
 import com.example.george.redtubesearch.Contract.VideoItem;
-import com.example.george.redtubesearch.Contract.VideoList;
-import com.example.george.redtubesearch.Tasks.DownloadXmlTask;
 import com.example.george.redtubesearch.R;
+import com.example.george.redtubesearch.Tasks.DownloadVideoListXmlTask;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -22,8 +21,10 @@ import java.util.List;
  * Created by George on 10/11/2015.
  */
 public class VideosListEndlessAdapter extends EndlessAdapter {
+    private static final String REDTUBE_ORDERING_URL = "&ordering=%s";
+    private static final String REDTUBE_PERIOD_URL = "&period=%s";
     private final String searchTerm;
-    public static final String REDTUBE_URL = "http://api.redtube.com/?data=redtube.Videos.searchVideos&output=xml&thumbsize=all&page=%s";
+    private static final String REDTUBE_URL = "http://api.redtube.com/?data=redtube.Videos.searchVideos&output=xml&thumbsize=all&page=%s";
     private static final String REDTUBE_SEARCH_URL="&search=%s";
     private static final String REDTUBE_CATEGORY_URL="&category=%s";
     private static final String REDTUBE_TAGS_URL="&tags[]=%s";
@@ -81,13 +82,13 @@ public class VideosListEndlessAdapter extends EndlessAdapter {
         pageNumber++;
         try {
             String url = (String.format(REDTUBE_URL, pageNumber) +
-                    ((!TextUtils.isEmpty(searchTerm)) ? String.format(URLEncoder.encode(searchTerm, java.nio.charset.StandardCharsets.UTF_8.name()), searchTerm) : "") +
-                    (isSorted ? String.format("&ordering=%s", sortingMethod) : "") +
-                    (isSorted && (sortingMethod.equals("rating") || sortingMethod.equals("mostviewed")) ? String.format("&period=%s", sortingParameter) : "") +
+                    ((!TextUtils.isEmpty(searchTerm)) ? String.format(REDTUBE_SEARCH_URL, URLEncoder.encode(searchTerm, java.nio.charset.StandardCharsets.UTF_8.name()), searchTerm) : "") +
+                    (isSorted ? String.format(REDTUBE_ORDERING_URL, sortingMethod) : "") +
+                    (isSorted && (sortingMethod.equals("rating") || sortingMethod.equals("mostviewed")) ? String.format(REDTUBE_PERIOD_URL, sortingParameter) : "") +
                     (hasCategory ? String.format(REDTUBE_CATEGORY_URL, URLEncoder.encode(category, java.nio.charset.StandardCharsets.UTF_8.name())) : "") +
                     ((!TextUtils.isEmpty(tags)) ? String.format(REDTUBE_TAGS_URL, URLEncoder.encode(tags, java.nio.charset.StandardCharsets.UTF_8.name())) : "") +
                     ((!TextUtils.isEmpty(stars)) ? String.format(REDTUBE_STARS_URL, URLEncoder.encode(stars, java.nio.charset.StandardCharsets.UTF_8.name())) : ""));
-            _items = new DownloadXmlTask<>(VideoList.class).execute(url).get().getVideos();
+            _items = new DownloadVideoListXmlTask().execute(url).get().getVideos();
         } catch (Exception e) {
             _items = null;
         }

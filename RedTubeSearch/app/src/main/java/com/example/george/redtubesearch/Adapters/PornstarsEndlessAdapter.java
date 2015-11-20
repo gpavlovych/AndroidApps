@@ -10,11 +10,10 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 import com.commonsware.cwac.endless.EndlessAdapter;
-import com.example.george.redtubesearch.Tasks.DownloadXmlTask;
-import com.example.george.redtubesearch.Helpers.ArrayHelper;
 import com.example.george.redtubesearch.Contract.Star;
-import com.example.george.redtubesearch.Contract.StarsList;
+import com.example.george.redtubesearch.Helpers.ArrayHelper;
 import com.example.george.redtubesearch.R;
+import com.example.george.redtubesearch.Tasks.DownloadStarsListXmlTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +63,7 @@ public class PornstarsEndlessAdapter extends EndlessAdapter implements Filterabl
     protected boolean cacheInBackground() throws Exception {
         try {
             String url = REDTUBE_DETAILED_STARLIST_URL;
-            _items=new DownloadXmlTask<StarsList>(StarsList.class).execute(url).get().getStars();
+            _items=new DownloadStarsListXmlTask().execute(url).get().getStars();
         } catch (Exception e) {
             _items =  null;
         }
